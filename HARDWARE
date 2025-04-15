@@ -1,0 +1,82 @@
+class HardwareStore:
+    def __init__(self):
+        self.inventory = {}
+
+    def add_item(self, item_name, quantity, price):
+        """Add a new item or update an existing item in the inventory."""
+        if item_name in self.inventory:
+            self.inventory[item_name]['quantity'] += quantity
+        else:
+            self.inventory[item_name] = {'quantity': quantity, 'price': price}
+        print(f"{item_name} added/updated successfully.")
+
+    def display_inventory(self):
+        """Display all items in the inventory."""
+        if not self.inventory:
+            print("Inventory is empty.")
+        else:
+            print(f"{'Item Name':<20} {'Quantity':<10} {'Price':<10}")
+            print("-" * 40)
+            for item_name, details in self.inventory.items():
+                print(f"{item_name:<20} {details['quantity']:<10} {details['price']:<10}")
+    
+    def sell_item(self, item_name, quantity):
+        """Sell an item from the inventory."""
+        if item_name in self.inventory:
+            if self.inventory[item_name]['quantity'] >= quantity:
+                self.inventory[item_name]['quantity'] -= quantity
+                total_price = self.inventory[item_name]['price'] * quantity
+                print(f"Sold {quantity} {item_name}(s). Total price: ${total_price}")
+            else:
+                print(f"Not enough stock of {item_name}. Only {self.inventory[item_name]['quantity']} available.")
+        else:
+            print(f"{item_name} is not available in the inventory.")
+    
+    def update_item_price(self, item_name, new_price):
+        """Update the price of an existing item."""
+        if item_name in self.inventory:
+            self.inventory[item_name]['price'] = new_price
+            print(f"Price of {item_name} updated to ${new_price}.")
+        else:
+            print(f"{item_name} is not available in the inventory.")
+
+def main():
+    store = HardwareStore()
+
+    while True:
+        print("\nHardware Store Management System")
+        print("1. Add Item")
+        print("2. Display Inventory")
+        print("3. Sell Item")
+        print("4. Update Item Price")
+        print("5. Exit")
+        
+        choice = input("Enter your choice (1-5): ")
+
+        if choice == '1':
+            item_name = input("Enter item name: ")
+            quantity = int(input("Enter quantity: "))
+            price = float(input("Enter price: $"))
+            store.add_item(item_name, quantity, price)
+        
+        elif choice == '2':
+            store.display_inventory()
+        
+        elif choice == '3':
+            item_name = input("Enter item name to sell: ")
+            quantity = int(input("Enter quantity to sell: "))
+            store.sell_item(item_name, quantity)
+        
+        elif choice == '4':
+            item_name = input("Enter item name to update price: ")
+            new_price = float(input("Enter new price: $"))
+            store.update_item_price(item_name, new_price)
+        
+        elif choice == '5':
+            print("Exiting the system.")
+            break
+        else:
+            print("Invalid choice! Please choose between 1 and 5.")
+
+if __name__ == "__main__":
+    main()
