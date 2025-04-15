@@ -2,7 +2,7 @@ class HardwareStore:
     def __init__(self):
         self.inventory = {}
 
-    def add_item(self, item_name, quantity, price):
+    def add_item(self, item_namequantity, price):
         """Add a new item or update an existing item in the inventory."""
         if item_name in self.inventory:
             self.inventory[item_name]['quantity'] += quantity
